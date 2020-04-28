@@ -64,7 +64,7 @@ p_rdrName l@(L spn _) = located l $ \x -> do
       singleQuoteWrapper =
         if AnnSimpleQuote `elem` ids
           then \y -> do
-            txt "'"
+            txt' "'"
             y
           else id
       m =

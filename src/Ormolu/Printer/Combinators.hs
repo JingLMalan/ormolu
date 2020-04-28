@@ -17,6 +17,7 @@ module Ormolu.Printer.Combinators
 
     -- ** Basic
     txt,
+    txt',
     atom,
     space,
     newline,
@@ -193,9 +194,9 @@ data BracketStyle
 -- | Surround given entity by backticks.
 backticks :: R () -> R ()
 backticks m = do
-  txt "`"
+  txt' "`"
   m
-  txt "`"
+  txt' "`"
 
 -- | Surround given entity by banana brackets (i.e., from arrow notation.)
 banana :: R () -> R ()
@@ -254,24 +255,24 @@ brackets_ ::
 brackets_ needBreaks open close style m = sitcc (vlayout singleLine multiLine)
   where
     singleLine = do
-      txt open
+      txt' open
       when needBreaks space
       m
       when needBreaks space
-      txt close
+      txt' close
     multiLine = do
-      txt open
+      txt' open
       if needBreaks
         then newline >> inci m
         else space >> sitcc m
       newline
       case style of
-        N -> txt close
-        S -> inci (txt close)
+        N -> txt' close
+        S -> inci (txt' close)
 
 ----------------------------------------------------------------------------
 -- Literals
 
 -- | Print @,@.
 comma :: R ()
-comma = txt ","
+comma = txt' ","
